@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fa" manifest="cache.manifest">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>هاست کپیخور PS5 تا ورژن 12.00 🎮</title>
+
+<link rel="preload" href="slopkit/cat.jpg" as="image">
+<link rel="preload" href="slopkit/bg.jpg" as="image">
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    font: 15px/1.5 "Segoe UI", system-ui, sans-serif;
+    color: #fff;
+  }
+
+  /* =========================
+     BACKGROUND - کاملاً واضح
+     ========================= */
+  body {
+    background:
+      linear-gradient(
+        rgba(5, 8, 15, .28),
+        rgba(5, 8, 15, .40)
+      ),
+      url("slopkit/bg.jpg") center center / cover no-repeat;
+
+    position: relative;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background: radial-gradient(
+      circle at center,
+      rgba(15, 25, 45, .03),
+      rgba(0, 0, 0, .25)
+    );
+
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* =========================
+     MAIN
+     ========================= */
+  #wrap {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 28px;
+  }
+
+  /* =========================
+     GLASS CAT
+     ========================= */
+  .cat-box {
+    position: relative;
+
+    padding: 12px;
+
+    border-radius: 25px;
+
+    background: rgba(255,255,255,.07);
+
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+
+    border: 3px solid transparent;
+
+    background:
+      linear-gradient(
+        rgba(15,20,35,.60),
+        rgba(10,15,28,.60)
+      ) padding-box,
+
+      linear-gradient(
+        90deg,
+        #ff0000,
+        #ff5500,
+        #ffff00,
+        #00ff00,
+        #00ffff,
+        #0088ff,
+        #4400ff,
+        #ff00ff,
+        #ff0000
+      ) border-box;
+
+    background-size:
+      100% 100%,
+      300% 100%;
+
+    box-shadow:
+      0 0 10px rgba(255,0,0,.65),
+      0 0 22px rgba(0,255,255,.55),
+      0 0 35px rgba(255,0,255,.40),
+      0 20px 55px rgba(0,0,0,.50);
+
+    animation:
+      rgbMove 5s linear infinite,
+      float 4s ease-in-out infinite;
+  }
+
+  #cat {
+    display: block;
+
+    width: 310px;
+    height: 200px;
+
+    object-fit: cover;
+
+    max-width: 70vw;
+    max-height: 34vw;
+
+    border-radius: 17px;
+
+    border: 2px solid rgba(255,255,255,.20);
+
+    box-shadow:
+      inset 0 0 25px rgba(255,255,255,.08),
+      0 12px 35px rgba(0,0,0,.45);
+  }
+
+  /* =========================
+     EXECUTE
+     دقیقاً همان RGB قاب CAT
+     ========================= */
+  #actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rgb-border {
+    position: relative;
+
+    padding: 3px;
+
+    border-radius: 25px;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ff0000,
+        #ff5500,
+        #ffff00,
+        #00ff00,
+        #00ffff,
+        #0088ff,
+        #4400ff,
+        #ff00ff,
+        #ff0000
+      );
+
+    background-size: 300% 100%;
+
+    animation: rgbMove 5s linear infinite;
+
+    box-shadow:
+      0 0 10px rgba(255,0,0,.65),
+      0 0 22px rgba(0,255,255,.55),
+      0 0 35px rgba(255,0,255,.40),
+      0 20px 55px rgba(0,0,0,.50);
+  }
+
+  .action {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 185px;
+
+    padding: 17px 30px;
+
+    border-radius: 22px;
+
+    color: #fff;
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(25,35,60,.85),
+        rgba(5,10,22,.90)
+      );
+
+    border: 1px solid rgba(255,255,255,.20);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    font: 700 20px/1 "Segoe UI", system-ui, sans-serif;
+
+    letter-spacing: .025em;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.20),
+      0 12px 35px rgba(0,0,0,.45);
+
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease;
+  }
+
+  .action:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.30),
+      0 0 20px rgba(255,255,255,.18),
+      0 18px 45px rgba(0,0,0,.55);
+  }
+
+  .action:focus {
+    outline: none;
+  }
+
+  .action:active {
+    transform: translateY(1px) scale(.98);
+  }
+
+  /* =========================
+     RGB - دقیقاً یکسان برای هر دو
+     ========================= */
+  @keyframes rgbMove {
+
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 300% 50%;
+    }
+
+  }
+
+  /* =========================
+     FLOAT CAT
+     ========================= */
+  @keyframes float {
+
+    0%, 100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  #status {
+    min-height: 1.5em;
+
+    color: rgba(255,255,255,.65);
+
+    font-size: 18px;
+  }
+
+  /* =========================
+     MOBILE
+     ========================= */
+  @media (max-width: 650px) {
+
+    #wrap {
+      gap: 22px;
+    }
+
+    .cat-box {
+      padding: 9px;
+    }
+
+    #cat {
+      width: 78vw;
+      height: auto;
+
+      aspect-ratio: 1.55 / 1;
+
+      max-width: none;
+      max-height: none;
+    }
+
+    .action {
+      min-width: 68vw;
+
+      padding: 18px 30px;
+    }
+
+  }
+
+</style>
+</head>
+
+<body>
+
+<div id="wrap">
+
+  <!-- RGB GLASS CAT -->
+  <div class="cat-box">
+
+    <img
+      id="cat"
+      src="slopkit/cat.jpg"
+      alt=""
+    >
+
+  </div>
+
+  <!-- RGB EXECUTE BUTTON -->
+  <div id="actions">
+
+    <div class="rgb-border">
+
+      <a
+        id="start"
+        class="action"
+        href="slopkit/poops.html?go=1&amp;auto=1&amp;trigger=netcontrol&amp;payload=1&amp;v=17"
+        tabindex="0"
+      >
+        اجرا
+      </a>
+
+    </div>
+
+  </div>
+
+  <div id="status"></div>
+
+</div>
+
+<script>
+
+try {
+
+    var q = new URLSearchParams(location.search);
+
+    var start = document.getElementById("start");
+
+    start.focus();
+
+} catch (e) {}
+
+
+try {
+
+    document
+      .getElementById("cat")
+      .addEventListener("error", function () {
+
+        this.style.display = "none";
+
+      });
+
+} catch (e) {}
+
+</script>
+<script>
+var normalTitle = "هاست کپیخور PS5 تا ورژن 12.00 🎮";
+
+function DLProgress(e) {
+    if (!e || !e.total) return;
+
+    var percent = Math.round((e.loaded / e.total) * 100);
+
+    document.title = "کش آفلاین: " + percent + "%";
+}
+
+function CacheComplete() {
+    document.title = normalTitle;
+}
+
+if (window.applicationCache) {
+    applicationCache.addEventListener("progress", DLProgress, false);
+    applicationCache.addEventListener("cached", CacheComplete, false);
+    applicationCache.addEventListener("updateready", CacheComplete, false);
+}
+</script>
+</body>
+</html>
