@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎮 PS5 9.00-12.00 کپیخور</title>
+  <link rel="stylesheet" href="main.css?v=final">
+  <style>
+    body {
+      background: radial-gradient(ellipse at 60% 0%, #1a0a2e 0%, #0c0c0f 55%, #050507 100%);
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 40% at 15% 85%, rgba(100,40,180,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 30% at 85% 20%, rgba(30,80,200,.14) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body > * { position: relative; z-index: 1; }
+    h1 { letter-spacing: .02em; }
+
+    #cache-status {
+      text-align: center;
+      padding: 1.5rem 1rem 0.5rem;
+      font-size: 1rem;
+      color: #ccc;
+    }
+    #cache-label {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    #cache-bar-wrap {
+      width: 70%;
+      max-width: 340px;
+      margin: 0.5rem auto;
+      height: 10px;
+      background: #202125;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    #cache-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #5e35b1, #7c4dff);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+    #cache-bar.done { background: linear-gradient(90deg, #2e7d32, #43a047); }
+    #cache-bar.error { background: linear-gradient(90deg, #b71c1c, #e53935); }
+    #cache-file {
+      font-size: 0.78rem;
+      color: #666;
+      margin-top: 0.3rem;
+      min-height: 1.1em;
+      word-break: break-all;
+    }
+    #reload-btn {
+      display: none;
+      margin: 1rem auto 0;
+      padding: 0.55rem 1.6rem;
+      background: linear-gradient(90deg, #5e35b1, #7c4dff);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: .03em;
+    }
+    #reload-btn:hover { opacity: 0.88; }
+  </style>
+</head>
+<body>
+  <div class="p-2">
+    <h1 class="text-center">🎮 PS5 9.00-12.00 کپیخور</h1>
+    <p class="text-center" id="top-bar-text">Current Firmware: <span class="fw-bold" id="current-fw">Unknown</span></p>
+  </div>
+
+  <div id="main-content">
+    <div id="pre-jb-view" class="selected">
+      <div id="cache-status">
+        <div id="cache-label">Checking cache...</div>
+        <div id="cache-bar-wrap"><div id="cache-bar"></div></div>
+        <div id="cache-file"></div>
+        <button id="reload-btn" onclick="location.reload()">Reload to Apply Cache</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="position-relative text-center p-2 mb-2">
+    <p class="text-secondary">Credits</p>
+    <p class="text-secondary mt-2">NIMA1592</p>
+  </div>
+
+  <script>
+    // -- Firmware label --
+    try {
+      var firmwareMatch = /PlayStation 5\/(\d+\.\d+)/.exec(navigator.userAgent);
+      var firmware = firmwareMatch ? firmwareMatch[1] : "";
+      document.getElementById("current-fw").textContent = firmware || "Not detected";
+    } catch (e) {}
+
+    var JB_URL = "slopkit/poops.html?go=1&auto=1&production=1&trigger=netcontrol&attempts=8&only=ps0_preflight,ps1_prepare,ps3_stage0,ps4_validate,ps5_stage1,ps6_stage2,ps8_stage3,ps9_stage4,ps10_stage5&log=debug&payload=1&v=final";
+
+    var label     = document.getElementById("cache-label");
+    var bar       = document.getElementById("cache-bar");
+    var fileEl    = document.getElementById("cache-file");
+    var reloadBtn = document.getElementById("reload-btn");
+
+    function setBar(pct, cls) {
+      bar.style.width = pct + "%";
+      bar.className   = cls ? "done" : (pct < 0 ? "error" : "");
+    }
+
+    function goJailbreak() {
+      // Skip straight to jailbreak — no delay, no extra reload
+      location.replace(JB_URL);
+    }
+
+    var ac = window.applicationCache;
+
+    if (!ac) {
+      // No AppCache support — go straight to jailbreak
+      goJailbreak();
+    } else {
+
+      // ── ALREADY CACHED: skip all UI and launch immediately ──────────────────
+      // ac.IDLE (2) = fully cached and up to date
+      // ac.UPDATEREADY (4) = new cache ready to swap
+      // Both mean everything is on disk — no network needed
+      if (ac.status === ac.IDLE) {
+        goJailbreak();
+      } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch(x) {}
+        goJailbreak();
+      } else {
+
+        // ── FIRST TIME or UNCACHED: show progress UI ────────────────────────
+        var total = 0, loaded = 0;
+
+        function onProgress(e) {
+          if (e && e.lengthComputable && e.total) {
+            total  = e.total;
+            loaded = e.loaded;
+          } else {
+            total  = total  || 1;
+            loaded = loaded + 1;
+          }
+          var pct = Math.min(99, Math.round((loaded / total) * 100));
+          setBar(pct, false);
+          label.textContent = "Caching… " + loaded + " / " + (total || "?") + " files";
+          try { fileEl.textContent = e && e.url ? e.url.replace(location.origin, "") : ""; } catch(x){}
+        }
+
+        // First-time cache done — user must tap to reload & launch
+        // (auto-reload causes net error on PS5 mid-cache)
+        function onCached() {
+          label.textContent  = "Cache complete!";
+          fileEl.textContent = "Tap below to apply and launch.";
+          setBar(100, true);
+          reloadBtn.style.display = "block";
+        }
+
+        // Cache updated — same: show button, don't auto-reload
+        function onUpdateReady() {
+          label.textContent  = "Cache updated!";
+          fileEl.textContent = "Tap below to apply and launch.";
+          setBar(100, true);
+          try { ac.swapCache(); } catch(x) {}
+          reloadBtn.style.display = "block";
+        }
+
+        function onError() {
+          // Offline with a fully-cached app: browser fires 'error' because it
+          // can't reach the server to check the manifest. IDLE means cached — launch.
+          if (ac.status === ac.IDLE) { goJailbreak(); return; }
+          bar.className = "error";
+          label.textContent  = "Cache error — launching anyway...";
+          fileEl.textContent = "Some files may not be available offline.";
+          setTimeout(function () { goJailbreak(); }, 1500);
+        }
+
+        ac.addEventListener("checking",    function () { label.textContent = "Checking cache..."; setBar(2, false); });
+        ac.addEventListener("downloading", function () { label.textContent = "Caching… 0 / ? files"; setBar(4, false); });
+        ac.addEventListener("progress",    onProgress);
+        ac.addEventListener("cached",      onCached);
+        ac.addEventListener("noupdate",    goJailbreak); // already cached, no changes → launch
+        ac.addEventListener("updateready", onUpdateReady);
+        ac.addEventListener("error",       onError);
+        ac.addEventListener("obsolete",    onError);
+      }
+    }
+  </script>
+</body>
+</html>
