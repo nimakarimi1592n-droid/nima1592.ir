@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayStation 4</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:url("PS4.jpg") center center/cover no-repeat fixed;
+    overflow:hidden;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+}
+
+.container{
+    position:relative;
+    z-index:10;
+    width:95%;
+    max-width:1200px;
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:30px;
+
+    padding:50px;
+    text-align:center;
+
+    box-shadow:0 0 40px rgba(0,180,255,.35);
+}
+
+h1{
+    color:white;
+    font-size:50px;
+    margin-bottom:10px;
+    text-shadow:0 0 20px cyan;
+}
+
+.subtitle{
+    color:#ddd;
+    margin-bottom:45px;
+    font-size:20px;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.card{
+    width:300px;
+    padding:25px;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px cyan;
+}
+
+.card h2{
+    color:white;
+    font-size:26px;
+    margin-bottom:25px;
+    min-height:60px;
+}
+
+.btn{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+
+    width:210px;
+    height:70px;
+
+    color:white;
+    text-decoration:none;
+
+    font-size:26px;
+    font-weight:bold;
+
+    border-radius:50px;
+    position:relative;
+    overflow:hidden;
+
+    background:#111;
+    transition:.3s;
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    inset:-3px;
+
+    background:linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        lime,
+        cyan,
+        blue,
+        magenta,
+        red
+    );
+
+    background-size:400%;
+    animation:rgb 5s linear infinite;
+
+    z-index:-2;
+}
+
+.btn::after{
+    content:"";
+    position:absolute;
+    inset:4px;
+    background:#111;
+    border-radius:50px;
+    z-index:-1;
+}
+
+@keyframes rgb{
+    0%{background-position:0%;}
+    100%{background-position:400%;}
+}
+
+.btn:hover{
+    transform:scale(1.08);
+
+    box-shadow:
+    0 0 20px cyan,
+    0 0 40px blue,
+    0 0 60px purple;
+}
+
+.footer{
+    margin-top:40px;
+    color:#aaa;
+    font-size:15px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>🎮 PlayStation 4</h1>
+
+<div class="subtitle">
+Select Your Exploit
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h2>USB</h2>
+
+<a class="btn" href="https://nima1592.ir/PS4/9.00">
+9.00
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>LAPSE-NOUSB</h2>
+
+<a class="btn" href="https://nima1592.ir/PS4/9.60">
+9.60
+</a>
+
+</div>
+<div class="card">
+
+<h2>CSSFontFace<br>Exploit</h2>
+
+<a class="btn" href="https://nima1592.ir/PS4/11.02">
+11.02
+</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+© NIMA1592
+</div>
+
+</div>
+
+<script>
+
+const ua = navigator.userAgent;
+
+const match = ua.match(/PlayStation\s*([45]).*?([0-9]+\.[0-9]+)/i);
+
+if(match){
+
+    let device = "PLAYSTATION " + match[1];
+    let fw = parseFloat(match[2]);
+
+
+    // PS5 یا PS4 بالاتر از 11.02
+    if(device === "PLAYSTATION 5"){
+
+        alert(
+        "⚠️ UNSUPPORTED DEVICE\n\n" +
+        "This host is only for PlayStation 4!"
+        );
+
+    }
+
+    else if(device === "PLAYSTATION 4" && fw > 11.02){
+
+        alert(
+        "⚠️ NIMA1592 HOST\n\n" +
+        "This host is only for PS4 firmware 11.02 or lower!"
+        );
+
+    }
+
+}
+
+else{
+
+    alert(
+    "⚠️ UNSUPPORTED DEVICE\n\n" +
+    "This host is only for PlayStation 4!"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
