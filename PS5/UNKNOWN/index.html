@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎮PLAYSTATION5 NOT-SUPPORTED</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:url("PS5PRO.jpg") center center/cover no-repeat;
+}
+
+.container{
+
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    padding:50px;
+
+    border-radius:35px;
+
+    text-align:center;
+
+    box-shadow:0 0 60px rgba(0,255,255,.3);
+
+}
+
+h1{
+
+    color:white;
+
+    font-size:45px;
+
+    text-shadow:0 0 20px cyan;
+
+    margin-bottom:25px;
+
+}
+
+.version{
+
+    color:#ddd;
+
+    font-size:25px;
+
+}
+
+.error{
+
+    margin-top:25px;
+
+    color:red;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    text-shadow:
+    0 0 10px red,
+    0 0 20px red;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1 id="title">
+🎮 PLAYSTATION5 : CHECKING
+</h1>
+
+
+<div class="version" id="version">
+
+Detecting Firmware...
+
+</div>
+
+
+<div class="error">
+
+NOT-SUPPORTED!
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+const ua = navigator.userAgent;
+
+let fw = "Unknown";
+let device = "UNKNOWN";
+
+const match = ua.match(/PlayStation\s*([45]).*?([0-9]+\.[0-9]+)/i);
+
+if (match) {
+
+    device = "PLAYSTATION " + match[1];
+    fw = match[2];
+
+}
+
+
+document.getElementById("title").innerHTML =
+"🎮 PLAYSTATION5 : " + fw;
+
+
+document.getElementById("version").innerHTML =
+"Firmware Version : " + fw;
+
+
+
+if(match){
+    
+    if(device === "PLAYSTATION 4"){
+
+    alert(
+    "⚠️ UNSUPPORTED DEVICE\n\n" +
+    "This host is only for PlayStation 5!"
+    );
+
+}
+
+    else if(device === "PLAYSTATION 5" && parseFloat(fw) > 12.00){
+
+        alert(
+        "⚠️ NIMA1592 HOST\n\n" +
+        "This host is only for PS5 firmware 12.00 or lower!"
+        );
+
+    }
+
+}
+
+else{
+
+    alert(
+    "⚠️ UNSUPPORTED DEVICE\n\n" +
+    "This host is only for PlayStation!"
+    );
+
+}
+
+
+</script>
+
+
+</body>
+</html>
