@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIMA1592 PS4/PS5 JAILBREAK HOST</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:#000 url("ps.png") center center/99.99999999% auto no-repeat;
+}
+
+.container{
+    position:relative;
+    z-index:10;
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);
+    padding:60px;
+    border-radius:35px;
+    text-align:center;
+    box-shadow:0 0 60px rgba(0,255,255,.3);
+}
+
+h1{
+    color:white;
+    font-size:55px;
+    margin-bottom:15px;
+    text-shadow:0 0 20px cyan;
+}
+
+p{
+    color:#ddd;
+    margin-bottom:40px;
+    font-size:20px;
+}
+
+.auto-btn{
+    position:fixed;
+    bottom:15px;
+    left:15px;
+    width:120px;
+    height:35px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:bold;
+    color:white;
+    text-decoration:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:fixed;
+    overflow:hidden;
+    background:#111;
+    transition:.35s;
+    z-index:20;
+}
+
+.auto-btn::before{
+    content:"";
+    position:absolute;
+    inset:-4px;
+    background:linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        lime,
+        cyan,
+        blue,
+        magenta,
+        red);
+    background-size:500%;
+    animation:rgb 5s linear infinite;
+    z-index:-2;
+}
+
+.auto-btn::after{
+    content:"";
+    position:absolute;
+    inset:4px;
+    background:#111;
+    border-radius:25px;
+    z-index:-1;
+}
+
+.auto-btn:hover{
+    transform:translateY(-5px) scale(1.08);
+    box-shadow:
+        0 0 25px cyan,
+        0 0 45px #00f,
+        0 0 70px purple;
+}
+
+.auto-btn:active{
+    transform:scale(.95);
+}
+
+
+.buttons{
+    display:flex;
+    gap:35px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.btn{
+    width:220px;
+    height:80px;
+    border:none;
+    border-radius:60px;
+    font-size:28px;
+    font-weight:bold;
+    cursor:pointer;
+    color:white;
+    text-decoration:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    transition:.35s;
+    background:#111;
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    inset:-4px;
+    background:linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        lime,
+        cyan,
+        blue,
+        magenta,
+        red);
+    background-size:500%;
+    animation:rgb 5s linear infinite;
+    z-index:-2;
+}
+
+.btn::after{
+    content:"";
+    position:absolute;
+    inset:4px;
+    background:#111;
+    border-radius:55px;
+    z-index:-1;
+}
+
+@keyframes rgb{
+    0%{background-position:0%;}
+    100%{background-position:500%;}
+}
+
+.btn:hover{
+    transform:translateY(-8px) scale(1.08);
+    box-shadow:
+        0 0 25px cyan,
+        0 0 45px #00f,
+        0 0 70px purple;
+}
+
+.btn:active{
+    transform:scale(.95);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="title">🎮 PLAYSTATION</h1>
+
+<script>
+
+const title = document.getElementById("title");
+const ua = navigator.userAgent;
+
+let device = "UNSUPPORTED-DEVICE";
+let fw = "Unknown";
+
+// تشخیص PS4 / PS5 و فریمور
+const match = ua.match(/PlayStation\s*([45]).*?([0-9]+\.[0-9]+)/i);
+
+if (match) {
+    device = "PLAYSTATION " + match[1];
+    fw = match[2];
+}
+
+let status = "UNSUPPORTED!";
+
+if (match) {
+
+    if (device === "PLAYSTATION 5") {
+
+        // PS5: تا 12.00 ساپورت
+        if (parseFloat(fw) <= 12.00) {
+            status = "SUPPORTED!";
+        }
+
+    } else if (device === "PLAYSTATION 4") {
+
+        // PS4: تا 11.02 ساپورت
+        if (parseFloat(fw) <= 13.00) {
+            status = "SUPPORTED!";
+        }
+
+    }
+
+}
+
+// تغییر عنوان
+if (match) {
+    title.textContent = `🎮 ${device} : ${fw}`;
+} else {
+    title.textContent = "🎮 PLAYSTATION";
+}
+
+alert(
+    "🎮 NIMA1592 HOST\n\n" +
+    "Console : " + device + "\n" +
+    "Firmware : " + fw + "\n\n" +
+    status
+);
+
+</script>
+
+<p>Select Your Console</p>
+
+<div class="buttons">
+
+<a class="btn" href="https://nima1592.ir/PS4">
+PS4
+</a>
+
+<a class="btn" href="https://nima1592.ir/PS5">
+PS5
+</a>
+
+<a class="auto-btn" href="https://nima1592.ir/AUTO">
+⚡AUTO SELECT🚀
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
