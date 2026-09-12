@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.manifest">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮NIMA1592 7.00-11.02</title>
+  <link rel="stylesheet" href="includes/style.css">
+</head>
+<body>
+
+  <h1>🎮NIMA1592🎮</h1>
+  <h3 id="UA">Running on:</h3>
+
+  <hr>
+
+  <div class="btn-container">
+    <form id="kernel-options">
+      <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
+      <label for="netctrl-exploit">NetCtrl</label>
+      <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
+      <label for="lapse-exploit">7.00-11.02</label>
+    </form>
+    <button id="jeilbrek">اجرای کپیخور</button>
+    <div class="autoJb">
+      <label for="autoJbInput" id="autoJbLabel">Auto Jailbreak</label>
+      <input class="mt-2" id="autoJbInput" type="checkbox">
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="media-box">
+      <img src="includes/cat.png" alt="A cat staring at you">
+    </div>
+
+    <pre id="console">Ready. Awaiting execution...
+  </pre>
+
+
+  </div>
+
+  <script src="src/main.js"></script>
+  <script src="includes/script.js"></script>
+  <script>
+      if(match){
+
+    // PS5
+    if(device === "PLAYSTATION 5"){
+
+        alert(
+        "⚠️ UNSUPPORTED DEVICE\n\n" +
+        "This host is only for PlayStation 4!"
+        );
+
+    }
+
+
+    // PS4 بالاتر از 11.02
+    else if(device === "PLAYSTATION 4" && parseFloat(fw) > 11.02){
+
+        alert(
+        "⚠️ NIMA1592 HOST\n\n" +
+        "This host is only for PS4 firmware 11.02 or lower!"
+        );
+
+    }
+
+}
+
+else{
+
+    alert(
+    "⚠️ UNSUPPORTED DEVICE\n\n" +
+    "This host is only for PlayStation!"
+    );
+
+}
+
+</script>
+
+  </script>
+</body>
+
+</html>
