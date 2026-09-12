@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AUTO SELECT</title>
+
+<script>
+
+(function(){
+
+const ua = navigator.userAgent;
+
+let device = "";
+let fw = 0;
+
+
+/* تشخیص PS5 */
+if(ua.match(/PlayStation 5/i)){
+    device = "PS5";
+}
+
+/* تشخیص PS4 */
+else if(ua.match(/PlayStation 4/i)){
+    device = "PS4";
+}
+
+
+/* گرفتن فریمور */
+const match = ua.match(/PlayStation\s*([45]).*?([0-9]+\.[0-9]+)/i);
+
+if (match) {
+    device = (match[1] === "5") ? "PS5" : "PS4";
+    fw = parseFloat(match[2]);
+}
+
+
+/* ================= PS5 ================= */
+
+if(device === "PS5"){
+
+    // PS5 1.00 تا 5.50
+    if(fw >= 1.00 && fw <= 5.50){
+        location.replace("https://nima1592.ir/PS5/5.50");
+    }
+
+    // PS5 6.00 تا 12.00
+    else if(fw >= 9.00 && fw <= 12.00){
+        location.replace("https://nima1592.ir/PS5/12.00");
+    }
+    
+    else if(fw > 12.01 && fw <= 12.70){
+        location.replace("https://nima1592.ir/PS5/12.70");
+}
+
+    else if(fw > 13.00 && fw <= 13.60){
+        location.replace("https://nima1592.ir/PS5/13.60");
+}
+
+    // PS5 ورژن ناشناخته
+    else{
+        location.replace("https://nima1592.ir/PS5/UNKNOWN");
+    }
+
+}
+
+
+/* ================= PS4 ================= */
+
+else if(device === "PS4"){
+
+    // PS4 1.00 تا 9.00
+    if(fw >= 1.00 && fw <= 9.00){
+        location.replace("https://nima1592.ir/PS4/9.00/AUTOLOADER");
+    }
+
+    // PS4 9.03 تا 9.60
+    else if(fw >= 9.03 && fw <= 9.60){
+        location.replace("https://nima1592.ir/PS4/9.60/AUTOLOADER");
+    }
+    
+    // PS4 9.03 تا 9.60
+    else if(fw >= 10.00 && fw <= 11.02){
+        location.replace("https://nima1592.ir/PS4/11.02");
+    }
+    
+    // PS4 9.03 تا 9.60
+    else if(fw >= 11.50 && fw <= 13.00){
+        location.replace("https://nima1592.ir/PS4/13.00");
+    }
+
+    // PS4 ورژن ناشناخته
+    else{
+        location.replace("https://nima1592.ir/PS4/UNKNOWN");
+    }
+
+}
+
+
+/* ================= سایر دستگاه ها ================= */
+
+else{
+
+    location.replace("https://nima1592.ir/NOT-SUPPORTED");
+
+}
+
+
+})();
+
+</script>
+
+</head>
+
+<body>
+
+</body>
+</html>
